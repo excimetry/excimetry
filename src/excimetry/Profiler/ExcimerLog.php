@@ -186,12 +186,15 @@ final class ExcimerLog
             ];
         }
 
+        // Calculate the total count (sum of all entry counts)
+        $totalCount = array_sum(array_column($parsedLog, 'count'));
+
         $profiles[] = [
             'type' => 'evented',
             'name' => 'Excimer Profile',
             'unit' => 'samples',
             'startValue' => 0,
-            'endValue' => $sampleTime,
+            'endValue' => $totalCount,
             'events' => $events,
         ];
 
