@@ -1,0 +1,41 @@
+{
+    "name": "olegmifle/excimetry",
+    "description": "Excimetry PHP package. Bridge between ext-eximer and open telemetry ",
+    "type": "library",
+    "keywords": ["library", "profiling", "eximer", "excimetry", "opentelemetry", "pyroscope"],
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Oleg Mifle",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "ext-excimer": "*",
+        "php": "8.2.*",
+        "google/protobuf": "^4.31",
+        "guzzlehttp/guzzle": "^7.9",
+        "symfony/console": "^6.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Excimetry\\": "src/excimetry",
+            "Opentelemetry\\Proto\\": "otelproto/Opentelemetry/Proto/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Excimetry\\Tests\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "bin": [
+        "bin/excimetry-profile"
+    ]
+}

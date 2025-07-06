@@ -1,0 +1,41 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+// Find the autoloader
+$autoloadPaths = [
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../../autoload.php',
+];
+
+$autoloaderFound = false;
+foreach ($autoloadPaths as $autoloadPath) {
+    if (file_exists($autoloadPath)) {
+        require_once $autoloadPath;
+        $autoloaderFound = true;
+        break;
+    }
+}
+
+if (!$autoloaderFound) {
+    echo "Error: Could not find autoloader. Please run 'composer install'.\n";
+    exit(1);
+}
+
+use Excimetry\CLI\ProfileCommand;
+use Symfony\Component\Console\Application;
+
+// Create the application
+$application = new Application('Excimetry', '1.0.0');
+
+// Add the profile command
+$application->add(new ProfileCommand());
+
+// Set the profile command as the default command
+$application->setDefaultCommand('profile', true);
+
+// Run the application
+$exitCode = $application->run();
+
+exit($exitCode);

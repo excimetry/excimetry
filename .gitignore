@@ -1,0 +1,7 @@
+composer.lock
+.idea
+GUIDELINES.md
+/vendor
+/docs
+.phpunit.result.cache
+.phpunit.cache
