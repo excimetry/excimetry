@@ -29,9 +29,6 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-php-
 
-    - name: Install dependencies
-      run: composer install --prefer-dist --no-progress
-
     - name: Build Docker image
       run: docker build -t excimetry .
 

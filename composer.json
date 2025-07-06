@@ -37,5 +37,8 @@
     },
     "bin": [
         "bin/excimetry-profile"
-    ]
+    ],
+    "scripts": {
+        "test": "phpunit"
+    }
 }
