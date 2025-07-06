@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     gcc \
     g++ \
     curl \
-    php-dev \
+    zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
