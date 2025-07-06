@@ -1,5 +1,5 @@
 {
-    "name": "olegmifle/excimetry",
+    "name": "excimetry/excimetry",
     "description": "Excimetry PHP package. Bridge between ext-eximer and open telemetry ",
     "type": "library",
     "keywords": ["library", "profiling", "eximer", "excimetry", "opentelemetry", "pyroscope"],
