@@ -2,8 +2,6 @@
 
 # Excimetry
 
-https://github.com/excimetry/excimetry/actions/workflows/tests.yml/badge.svg
-
 Excimetry is a PHP profiling library that provides a bridge between the [ext-excimer](https://www.mediawiki.org/wiki/Excimer) extension and various profiling tools and platforms. It offers a simple and flexible way to profile PHP applications and export the results to various formats and backends.
 
 
