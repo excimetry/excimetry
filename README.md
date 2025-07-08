@@ -235,9 +235,10 @@ $log = $profiler->getLog();
 // Send to Pyroscope
 $exporter = new CollapsedExporter();
 $backend = new PyroscopeBackend(
-    'http://localhost:4040', // Pyroscope server URL
-    'my-application',        // Application name
-    ['env' => 'production']  // Labels
+    serverUrl: 'http://localhost:4040',
+    appName: 'my-application',
+    labels: ['env' => 'production'],
+    exporter: $exporter,
 );
 
 // Send the profile to Pyroscope
