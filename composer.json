@@ -13,7 +13,7 @@
     "minimum-stability": "stable",
     "require": {
         "ext-excimer": "*",
-        "php": "8.2.*",
+        "php": "^8.2",
         "google/protobuf": "^4.31",
         "guzzlehttp/guzzle": "^7.9",
         "symfony/console": "^6.4"
