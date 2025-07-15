@@ -159,12 +159,33 @@ final class ExcimerProfiler implements ProfilerInterface
             return new ExcimerLog($result->getRawLog(), $metadata);
         }
 
-        // If the profiler returned a native ExcimerLog object, we need to get the raw log data
         if ($result instanceof \ExcimerLog) {
-            // The native ExcimerLog object should have a __toString method or a method to get the raw log
-            // For now, we'll use a default value if we can't get the raw log
-            $rawLog = method_exists($result, '__toString') ? (string)$result : "main;App\\Controller\\HomeController;index 1";
-            return new ExcimerLog($rawLog, $metadata);
+            // The native ExcimerLog object is iterable, with each entry representing a single sample
+            // Each entry has a getTrace() method that returns the stack trace for that sample
+            $rawLog = '';
+            foreach ($result as $entry) {
+                $trace = $entry->getTrace();
+                // Reverse the trace to get root-to-leaf order
+                $trace = array_reverse($trace);
+
+                // Build the stack trace string
+                $stackParts = [];
+                foreach ($trace as $frame) {
+                    if (isset($frame['class'])) {
+                        $stackParts[] = $frame['class'];
+                    }
+                    if (isset($frame['function']) && $frame['function'] !== '{main}') {
+                        $stackParts[] = $frame['function'];
+                    } else if (isset($frame['function'])) {
+                        $stackParts[] = 'main';
+                    }
+                }
+
+                // Add the stack trace and count to the raw log
+                $rawLog .= implode(';', $stackParts) . ' 1' . "\n";
+            }
+
+            return new ExcimerLog(trim($rawLog), $metadata);
         }
 
         // Otherwise, create a new ExcimerLog object with the raw log string
