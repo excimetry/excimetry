@@ -210,6 +210,10 @@ $backend = $integration->getBackend();
 
 [Pyroscope](https://pyroscope.io/) is a continuous profiling platform that helps you find performance issues in your code. Excimetry can send profiles directly to a Pyroscope server.
 
+<p align="center">
+<img src="https://raw.githubusercontent.com/excimetry/excimetry/refs/heads/main/static/pyroscope-symfony-example.png" style="width: 70%;">
+</p>
+
 ```php
 use Excimetry\Profiler\ExcimerProfiler;
 use Excimetry\Exporter\CollapsedExporter;
