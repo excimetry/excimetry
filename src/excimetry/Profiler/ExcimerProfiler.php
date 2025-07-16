@@ -164,25 +164,29 @@ final class ExcimerProfiler implements ProfilerInterface
             // Each entry has a getTrace() method that returns the stack trace for that sample
             $rawLog = '';
             foreach ($result as $entry) {
-                $trace = $entry->getTrace();
-                // Reverse the trace to get root-to-leaf order
-                $trace = array_reverse($trace);
+                $trace = array_reverse($entry->getTrace());
 
-                // Build the stack trace string
                 $stackParts = [];
                 foreach ($trace as $frame) {
-                    if (isset($frame['class'])) {
-                        $stackParts[] = $frame['class'];
+                    $function = $frame['function'] ?? 'main';
+
+                    if ($function === '{main}') {
+                        $function = 'main';
                     }
-                    if (isset($frame['function']) && $frame['function'] !== '{main}') {
-                        $stackParts[] = $frame['function'];
-                    } else if (isset($frame['function'])) {
-                        $stackParts[] = 'main';
+
+                    if (!empty($frame['class'])) {
+                        // Avoid double-qualified names
+                        if (str_starts_with($function, $frame['class'] . '\\')) {
+                            $function = preg_replace('/^' . preg_quote($frame['class'] . '\\', '/') . '/', '', $function);
+                        }
+
+                        $stackParts[] = $frame['class'] . '::' . $function;
+                    } else {
+                        $stackParts[] = $function;
                     }
                 }
 
-                // Add the stack trace and count to the raw log
-                $rawLog .= implode(';', $stackParts) . ' 1' . "\n";
+                $rawLog .= implode(';', $stackParts) . " 1\n";
             }
 
             return new ExcimerLog(trim($rawLog), $metadata);
