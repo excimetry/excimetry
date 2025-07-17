@@ -15,42 +15,42 @@ final class ExcimetryConfig
      * @var float The sampling period in seconds
      */
     private float $period = 0.01; // Default: 10ms
-    
+
     /**
-     * @var string The profiling mode
+     * @var ExcimetryModeEnum The profiling mode
      */
-    private string $mode = 'wall'; // Default: wall time
-    
+    private ExcimetryModeEnum $mode = ExcimetryModeEnum::wall; // Default: wall time
+
     /**
      * @var array Metadata to include with the profile
      */
     private array $metadata = [];
-    
+
     /**
      * @var string The default export format
      */
     private string $exportFormat = 'speedscope'; // Default: speedscope
-    
+
     /**
      * @var string The default output directory for file exports
      */
     private string $outputDirectory = 'profiles'; // Default: profiles
-    
+
     /**
      * @var bool Whether to use async export by default
      */
     private bool $asyncExport = false; // Default: synchronous
-    
+
     /**
      * @var int The maximum number of retries for exports
      */
     private int $maxRetries = 3; // Default: 3 retries
-    
+
     /**
      * @var int The delay between retries in milliseconds
      */
     private int $retryDelay = 1000; // Default: 1 second
-    
+
     /**
      * Create a new ExcimetryConfig instance.
      * 
@@ -66,7 +66,7 @@ final class ExcimetryConfig
             }
         }
     }
-    
+
     /**
      * Get the sampling period in seconds.
      * 
@@ -76,7 +76,7 @@ final class ExcimetryConfig
     {
         return $this->period;
     }
-    
+
     /**
      * Set the sampling period in seconds.
      * 
@@ -88,7 +88,7 @@ final class ExcimetryConfig
         $this->period = $period;
         return $this;
     }
-    
+
     /**
      * Get the profiling mode.
      * 
@@ -96,9 +96,9 @@ final class ExcimetryConfig
      */
     public function getMode(): string
     {
-        return $this->mode;
+        return $this->mode->value;
     }
-    
+
     /**
      * Set the profiling mode.
      * 
@@ -113,11 +113,11 @@ final class ExcimetryConfig
                 "Invalid profiling mode: {$mode}. Supported modes are 'wall' and 'cpu'."
             );
         }
-        
-        $this->mode = $mode;
+
+        $this->mode = ExcimetryModeEnum::tryFrom($mode) ?? ExcimetryModeEnum::wall;
         return $this;
     }
-    
+
     /**
      * Get the metadata to include with the profile.
      * 
@@ -127,7 +127,7 @@ final class ExcimetryConfig
     {
         return $this->metadata;
     }
-    
+
     /**
      * Set the metadata to include with the profile.
      * 
@@ -139,7 +139,7 @@ final class ExcimetryConfig
         $this->metadata = $metadata;
         return $this;
     }
-    
+
     /**
      * Add metadata to include with the profile.
      * 
@@ -152,7 +152,7 @@ final class ExcimetryConfig
         $this->metadata[$key] = $value;
         return $this;
     }
-    
+
     /**
      * Get the default export format.
      * 
@@ -162,7 +162,7 @@ final class ExcimetryConfig
     {
         return $this->exportFormat;
     }
-    
+
     /**
      * Set the default export format.
      * 
@@ -177,11 +177,11 @@ final class ExcimetryConfig
                 "Invalid export format: {$format}. Supported formats are 'speedscope', 'collapsed', and 'otlp'."
             );
         }
-        
+
         $this->exportFormat = $format;
         return $this;
     }
-    
+
     /**
      * Get the default output directory for file exports.
      * 
@@ -191,7 +191,7 @@ final class ExcimetryConfig
     {
         return $this->outputDirectory;
     }
-    
+
     /**
      * Set the default output directory for file exports.
      * 
@@ -203,7 +203,7 @@ final class ExcimetryConfig
         $this->outputDirectory = rtrim($directory, '/');
         return $this;
     }
-    
+
     /**
      * Get whether to use async export by default.
      * 
@@ -213,7 +213,7 @@ final class ExcimetryConfig
     {
         return $this->asyncExport;
     }
-    
+
     /**
      * Set whether to use async export by default.
      * 
@@ -225,7 +225,7 @@ final class ExcimetryConfig
         $this->asyncExport = $async;
         return $this;
     }
-    
+
     /**
      * Get the maximum number of retries for exports.
      * 
@@ -235,7 +235,7 @@ final class ExcimetryConfig
     {
         return $this->maxRetries;
     }
-    
+
     /**
      * Set the maximum number of retries for exports.
      * 
@@ -250,11 +250,11 @@ final class ExcimetryConfig
                 "Invalid number of retries: {$retries}. The number of retries must be non-negative."
             );
         }
-        
+
         $this->maxRetries = $retries;
         return $this;
     }
-    
+
     /**
      * Get the delay between retries in milliseconds.
      * 
@@ -264,7 +264,7 @@ final class ExcimetryConfig
     {
         return $this->retryDelay;
     }
-    
+
     /**
      * Set the delay between retries in milliseconds.
      * 
@@ -279,11 +279,11 @@ final class ExcimetryConfig
                 "Invalid retry delay: {$delay}. The retry delay must be non-negative."
             );
         }
-        
+
         $this->retryDelay = $delay;
         return $this;
     }
-    
+
     /**
      * Get the configuration as an array.
      * 
@@ -293,7 +293,7 @@ final class ExcimetryConfig
     {
         return [
             'period' => $this->period,
-            'mode' => $this->mode,
+            'mode' => $this->mode->value,
             'metadata' => $this->metadata,
             'exportFormat' => $this->exportFormat,
             'outputDirectory' => $this->outputDirectory,
@@ -302,7 +302,7 @@ final class ExcimetryConfig
             'retryDelay' => $this->retryDelay,
         ];
     }
-    
+
     /**
      * Create a new ExcimetryConfig instance with default values.
      * 

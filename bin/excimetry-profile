@@ -27,7 +27,7 @@ use Excimetry\CLI\ProfileCommand;
 use Symfony\Component\Console\Application;
 
 // Create the application
-$application = new Application('Excimetry', '1.0.0');
+$application = new Application('Excimetry');
 
 // Add the profile command
 $application->add(new ProfileCommand());

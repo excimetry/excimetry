@@ -90,6 +90,8 @@ final class ExcimerProfiler implements ProfilerInterface
 
         $this->mode = $mode;
 
+        $this->profiler->setEventType($mode === 'wall' ? \EXCIMER_REAL : \EXCIMER_CPU);
+
         return $this;
     }
 

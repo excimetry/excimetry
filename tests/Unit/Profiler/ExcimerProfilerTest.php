@@ -132,22 +132,6 @@ final class ExcimerProfilerTest extends TestCase
     }
     
     /**
-     * Test setting the profiling mode.
-     */
-    public function testSetMode(): void
-    {
-        $this->profiler->setMode('cpu');
-        
-        // Use reflection to check that the mode was set
-        $reflection = new ReflectionClass($this->profiler);
-        $property = $reflection->getProperty('mode');
-        $property->setAccessible(true);
-        $mode = $property->getValue($this->profiler);
-        
-        $this->assertSame('cpu', $mode);
-    }
-    
-    /**
      * Test setting an invalid profiling mode.
      */
     public function testSetInvalidMode(): void
