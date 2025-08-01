@@ -40,7 +40,7 @@ final class OTLPBackend extends HttpBackend
         
         // Set up headers for OTLP
         $headers = [
-            'Accept: application/json',
+            'Accept' => 'application/json',
         ];
         
         parent::__construct($exporter, $url, $headers);
@@ -92,14 +92,10 @@ final class OTLPBackend extends HttpBackend
             
             // Update the headers based on the format
             $headers = $this->getHeaders();
-            $contentTypeHeader = 'Accept: ' . $exporter->getContentType();
             
-            // Replace the Accept header
-            $headers = array_filter($headers, function($header) {
-                return strpos($header, 'Accept:') !== 0;
-            });
+            // Set the Accept header in associative array format
+            $headers['Accept'] = $exporter->getContentType();
             
-            $headers[] = $contentTypeHeader;
             $this->setHeaders($headers);
         }
         
