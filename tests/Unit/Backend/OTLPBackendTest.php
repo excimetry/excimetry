@@ -35,7 +35,8 @@ final class OTLPBackendTest extends TestCase
         
         // Check that the headers include the Accept header
         $headers = $backend->getHeaders();
-        $this->assertContains('Accept: application/json', $headers);
+        $this->assertArrayHasKey('Accept', $headers);
+        $this->assertEquals('application/json', $headers['Accept']);
     }
     
     /**
@@ -98,7 +99,8 @@ final class OTLPBackendTest extends TestCase
         
         // Check that the headers were updated
         $headers = $backend->getHeaders();
-        $this->assertContains('Accept: application/x-protobuf', $headers);
+        $this->assertArrayHasKey('Accept', $headers);
+        $this->assertEquals('application/x-protobuf', $headers['Accept']);
     }
     
     /**
